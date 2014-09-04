@@ -42,23 +42,6 @@ public class MainActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
-		LayoutInflater inflator =
-				(LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
-		View v = inflator.inflate(R.layout.custom_ab, null);
-		tabBarView = (TabBarView) v.findViewById(R.id.tab_bar);
-
-		getActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-		getActionBar().setCustomView(v);
-		// Create the adapter that will return a fragment for each of the three
-		// primary sections of the activity.
-		mSectionsPagerAdapter = new SectionsPagerAdapter(getFragmentManager());
-
-		// Set up the ViewPager with the sections adapter.
-		mViewPager = (ViewPager) findViewById(R.id.pager);
-		mViewPager.setAdapter(mSectionsPagerAdapter);
-
-		tabBarView.setViewPager(mViewPager);
 	}
 
 	@Override
@@ -66,6 +49,16 @@ public class MainActivity extends Activity {
 
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.main, menu);
+		View v = (View) menu.findItem(R.id.action_settings).getActionView();
+		tabBarView = (TabBarView) v.findViewById(R.id.tab_bar);
+		tabBarView.setStripHeight(10);
+		mSectionsPagerAdapter = new SectionsPagerAdapter(getFragmentManager());
+
+		// Set up the ViewPager with the sections adapter.
+		mViewPager = (ViewPager) findViewById(R.id.pager);
+		mViewPager.setAdapter(mSectionsPagerAdapter);
+
+		tabBarView.setViewPager(mViewPager);
 		return true;
 	}
 
@@ -85,13 +78,11 @@ public class MainActivity extends Activity {
 	 * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
 	 * one of the sections/tabs/pages.
 	 */
-	public class SectionsPagerAdapter extends FragmentPagerAdapter implements IconTabProvider{
+	public class SectionsPagerAdapter extends FragmentPagerAdapter implements
+			IconTabProvider {
 
-		private int[] tab_icons={R.drawable.ic_tab1,
-				R.drawable.ic_tab2,
-				R.drawable.ic_tab3,
-		};
-
+		private int[] tab_icons = { R.drawable.ic_tab1, R.drawable.ic_tab2,
+				R.drawable.ic_tab3, };
 
 		public SectionsPagerAdapter(FragmentManager fm) {
 			super(fm);
